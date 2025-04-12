@@ -6,8 +6,13 @@ const connectDB = require('./config/db');
 const app = express();
 connectDB();
 
-app.use(cors());
-app.use(express.json());
+
+app.use(cors({
+    origin: 'https://revisit-1-b7rw.onrender.com', 
+    credentials: true
+  }));
+
+  app.use(express.json());
 
 app.use('/api/', require('./routes/authRoutes'));
 app.use('/api/', require('./routes/categoryRoutes'));
