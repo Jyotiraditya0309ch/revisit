@@ -6,13 +6,24 @@ const connectDB = require('./config/db');
 const app = express();
 connectDB();
 
-
-app.use(cors({
-    origin: 'https://revisit-1-b7rw.onrender.com', 
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://revisit-1-b7rw.onrender.com' 
+  ];
+  
+  app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true
   }));
+  
+app.use(express.json());
 
-  app.use(express.json());
 
 app.use('/api/', require('./routes/authRoutes'));
 app.use('/api/', require('./routes/categoryRoutes'));
