@@ -4,17 +4,24 @@ import axiosInstance from '../utils/axiosInstance';
 function TopNavBar() {
   const [userName, setUserName] = useState('');
 
+
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
     const fetchUser = async () => {
-      try {
-        const res = await axiosInstance.get('/auth/user');
-        setUserName(res.data.name);
-      } catch (err) {
-        console.error('Failed to fetch user info');
-      }
-    };
-    fetchUser();
+        try {
+          const res = await axiosInstance.get('/user', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },})
+          setUserName(res.data.name);
+        } catch (err) {
+          console.error('Failed to fetch user info');
+        }
+      };
+      fetchUser();
   }, []);
+  
 
   return (
     <header className="h-16 flex items-center justify-end px-6 bg-white shadow-sm">

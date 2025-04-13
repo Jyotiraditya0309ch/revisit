@@ -8,7 +8,7 @@ connectDB();
 
 const allowedOrigins = [
     'http://localhost:3000',
-    'https://revisit-1-b7rw.onrender.com' 
+    'https://revisit-1-b7rw.onrender.com' // your deployed frontend
   ];
   
   app.use(cors({
